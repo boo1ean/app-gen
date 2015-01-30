@@ -39,19 +39,21 @@ function buildFiles (plural, singular, columns) {
 
 	under('core');
 
-	load('templates/core/dal.js', 'core/{{{ plural }}}/dal.js', data);
-	load('templates/core/index.js', 'core/{{{ plural }}}/index.js', data);
+	render('templates/core/dal.js', 'core/{{{ plural }}}/dal.js', data);
+	render('templates/core/index.js', 'core/{{{ plural }}}/index.js', data);
 
 	under('front');
 
-	load('templates/front/module/list.js', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.js', data);
-	load('templates/front/module/list.html', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.html', data);
-	load('templates/front/resource.js', 'front/resources/{{{ plural }}}.js', data);
+	render('templates/front/module/list.js', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.js', data);
+	render('templates/front/module/list.html', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.html', data);
+	render('templates/front/resource.js', 'front/resources/{{{ plural }}}.js', data);
 
 	under('web');
 
-	load('templates/web/controller.js', 'web/controllers/{{{ plural }}}.js', data);
-	cat('generated routes:', 'templates/web/routes.js', data);
+	render('templates/web/controller.js', 'web/controllers/{{{ plural }}}.js', data);
+
+
+	patch(/\nmodule.exports = function configureRoutes \(app\) \{/, 'templates/web/routes.js', 'web/routes.js', data);
 }
 
 function under (dest) {
@@ -73,7 +75,7 @@ function halt (msg) {
 	process.exit();
 }
 
-function load (src, dest, data) {
+function render (src, dest, data) {
 	dest = _.template(dest)(data);
 	var destPath = path.dirname(dest)
 
@@ -85,13 +87,16 @@ function load (src, dest, data) {
 	console.log('create', dest);
 }
 
-function cat (title, src, data) {
-	var sep = '========================';
+function patch (pattern, src, dest, data) {
+	dest = _.template(dest)(data);
 	var rendered = _.template(fs.readFileSync(__dirname + '/' + src).toString())(data);
-	console.log('\n' + sep);
-	console.log(title, '\n');
-	console.log(rendered);
-	console.log(sep);
+
+	var destContent = fs.readFileSync(dest).toString();
+	destContent = destContent.replace(pattern, rendered);
+
+	fs.writeFileSync(dest, destContent);
+
+	console.log('patch', dest);
 }
 
 realist(generateResource);
