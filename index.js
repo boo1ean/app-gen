@@ -47,10 +47,15 @@ function buildFiles (plural, singular, columns) {
 	load('templates/front/module/list.js', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.js', data);
 	load('templates/front/module/list.html', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.html', data);
 	load('templates/front/resource.js', 'front/resources/{{{ plural }}}.js', data);
+
+	under('web');
+
+	load('templates/web/controller.js', 'web/controllers/{{{ plural }}}.js', data);
+	cat('generated routes:', 'templates/web/routes.js', data);
 }
 
 function under (dest) {
-	console.log('\nFiles generated in', dest, '\n');
+	console.log('\nfiles generated in', dest, '\n');
 }
 
 function getData (plural, singular, columns) {
@@ -78,6 +83,15 @@ function load (src, dest, data) {
 	fs.writeFileSync(dest, rendered);
 
 	console.log('create', dest);
+}
+
+function cat (title, src, data) {
+	var sep = '========================';
+	var rendered = _.template(fs.readFileSync(__dirname + '/' + src).toString())(data);
+	console.log('\n' + sep);
+	console.log(title, '\n');
+	console.log(rendered);
+	console.log(sep);
 }
 
 realist(generateResource);
