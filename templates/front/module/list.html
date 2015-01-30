@@ -5,6 +5,9 @@
 			<input type="text" class="form-control" ng-model="{{{ singular }}}.{{{ col.name }}}" name="title" placeholder="{{{ col.name }}}" />
 		</div>
 		<% }) %>
+		<div class="form-group">
+			<button class="btn btn-primary btn-block" ng-click="create({{{ singular }}})">добавить {{{ singular }}}</button>
+		</div>
 	</div>
 
 	<div class="col col-md-9">
@@ -15,6 +18,7 @@
 						<% columns.forEach(function (col) { %>
 						<td>{{ {{{ singular }}}.{{{ col.name }}} }}</td>
 						<% }) %>
+						<td><button class="btn btn-xs btn-danger" ng-click="remove({{{ singular }}})">&times;</button></td>
 					</tr>
 				</table>
 			</div>
