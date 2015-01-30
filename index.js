@@ -47,6 +47,7 @@ function buildFiles (plural, singular, columns) {
 	render('templates/front/module/list.js', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.js', data);
 	render('templates/front/module/list.html', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.html', data);
 	render('templates/front/resource.js', 'front/resources/{{{ plural }}}.js', data);
+	patch(/\s+\$routeProvider./, 'templates/front/routes.js', 'front/routes.js', data);
 
 	under('web');
 
