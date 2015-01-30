@@ -5,18 +5,24 @@ Generate boilerplate stuff
 ## Resource (entity)
 
 ```
-> app-gen users user name:text password:text
+> app-gen posts post title:text body:text
 
-Files generated in core 
+files generated in core 
 
-create core/users/dal.js
-create core/users/index.js
+create core/posts/dal.js
+create core/posts/index.js
 
-Files generated in front 
+files generated in front 
 
-create front/modules/users/users-list.js
-create front/modules/users/users-list.html
-create front/resources/users.js
+create front/modules/posts/posts-list.js
+create front/modules/posts/posts-list.html
+create front/resources/posts.js
+patch front/routes.js
+
+files generated in web 
+
+create web/controllers/posts.js
+patch web/routes.js
 ```
 
 ## License
