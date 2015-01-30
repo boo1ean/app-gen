@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="col col-md-3">
+		<% columns.forEach(function (col) { %>
+		<div class="form-group form-input">
+			<input type="text" class="form-control" ng-model="{{{ singular }}}.{{{ col.name }}}" name="title" placeholder="{{{ col.name }}}" />
+		</div>
+		<% }) %>
+	</div>
+
+	<div class="col col-md-9">
+		<div class="row">
+			<div class="col col-md-12">
+				<table class="table">
+					<tr ng-repeat="{{{ singular }}} in {{{ plural }}}">
+						<% columns.forEach(function (col) { %>
+						<td>{{ {{{ singular }}}.{{{ col.name }}} }}</td>
+						<% }) %>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
