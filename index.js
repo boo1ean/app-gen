@@ -51,8 +51,6 @@ function buildFiles (plural, singular, columns) {
 	under('web');
 
 	render('templates/web/controller.js', 'web/controllers/{{{ plural }}}.js', data);
-
-
 	patch(/\nmodule.exports = function configureRoutes \(app\) \{/, 'templates/web/routes.js', 'web/routes.js', data);
 }
 
