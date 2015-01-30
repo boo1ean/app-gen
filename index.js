@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var realist = require('realist');
 var mkdirp = require('mkdirp');
 var _ = require('lodash');
