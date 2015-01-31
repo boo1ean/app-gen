@@ -14,7 +14,8 @@ function generateResource (args) {
 
 	function parseColumns (columns) {
 		if (columns.length < 1) {
-			halt('Entity columns required');
+			utils.info('Error: Entity columns required\n');
+			usage();
 		}
 
 		return columns.map(parseColumn);
@@ -23,7 +24,8 @@ function generateResource (args) {
 			var tokens = col.split(':');
 
 			if (tokens.length !== 2) {
-				halt('Invalid column declaration: ' + col);
+				utils.info('Error: invalid column declaration: ' + col);
+				usage();
 			}
 
 			return {
@@ -65,15 +67,42 @@ function generateResource (args) {
 	}
 }
 
+function generateDirective (name) {
+	if (!name) {
+		utils.info('Error: Directive name is required \n');
+		usage();
+	}
+
+	buildFiles(name);
+
+	function buildFiles (name) {
+		var data = getData(name);
+
+		utils.under('front');
+
+		utils.render('templates/front/directive.js', 'front/directives/{{{ name }}}/{{{ name }}}.js', data);
+		utils.render('templates/front/directive.html', 'front/directives/{{{ name }}}/{{{ name }}}.html', data);
+	}
+
+	function getData (name) {
+		return {
+			name: name,
+			Name: _.camelCase(name)
+		}
+	}
+}
 
 function usage () {
-	console.log(fs.readFileSync(__dirname + '/usage.txt').toString());
+	utils.info(fs.readFileSync(__dirname + '/usage.txt').toString());
+	process.exit();
 };
 
 function execute () {
 	switch (true) {
 		case argv._[0] === 'res':
 			return generateResource(argv._.slice(1));
+		case argv._[0] === 'dir':
+			return generateDirective(argv._[1]);
 		default:
 			return usage();
 	}
