@@ -2,27 +2,16 @@
 
 Generate boilerplate stuff
 
-## Resource (entity)
+## Usage
 
 ```
-> app-gen posts post title:text body:text
+app-gen - app-helpers generators (https://github.com/boo1ean/app-skeleton)
 
-files generated in core 
+	generate resource boilerplate
+	app-gen res <plural> <singular> <col1:type> [col2:type] ... [colN:type]
 
-create core/posts/dal.js
-create core/posts/index.js
-
-files generated in front 
-
-create front/modules/posts/posts-list.js
-create front/modules/posts/posts-list.html
-create front/resources/posts.js
-patch front/routes.js
-
-files generated in web 
-
-create web/controllers/posts.js
-patch web/routes.js
+	generate angular directive
+	app-gen dir <name>
 ```
 
 ## License
