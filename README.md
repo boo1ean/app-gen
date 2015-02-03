@@ -12,6 +12,9 @@ app-gen - app-helpers generators (https://github.com/boo1ean/app-skeleton)
 
 	generate angular directive
 	app-gen dir <name>
+
+	generate backend controller
+	app-gen con <name>
 ```
 
 ## License

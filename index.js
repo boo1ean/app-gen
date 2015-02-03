@@ -92,6 +92,30 @@ function generateDirective (name) {
 	}
 }
 
+function generateController (name) {
+	if (!name) {
+		utils.info('Error: Directive name is required \n');
+		usage();
+	}
+
+	buildFiles(name);
+
+	function buildFiles (name) {
+		var data = getData(name);
+
+		utils.under('web');
+
+		utils.render('templates/web/empty-controller.js', 'web/controllers/{{{ name }}}.js', data);
+		utils.patch(/\nmodule.exports = function configureRoutes \(app\) \{\n/, 'templates/web/controller-routes.js', 'web/routes.js', data);
+	}
+
+	function getData (name) {
+		return {
+			name: name
+		}
+	}
+}
+
 function usage () {
 	utils.info(fs.readFileSync(__dirname + '/usage.txt').toString());
 	process.exit();
@@ -103,6 +127,8 @@ function execute () {
 			return generateResource(argv._.slice(1));
 		case argv._[0] === 'dir':
 			return generateDirective(argv._[1]);
+		case argv._[0] === 'con':
+			return generateController(argv._[1]);
 		default:
 			return usage();
 	}
