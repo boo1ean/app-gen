@@ -45,8 +45,10 @@ function generateResource (args) {
 
 		utils.under('front');
 
-		utils.render('templates/front/module/list.js', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.js', data);
-		utils.render('templates/front/module/list.html', 'front/modules/{{{ plural }}}/{{{ plural}}}-list.html', data);
+		utils.render('templates/front/module/list.js', 'front/modules/{{{ plural }}}/{{{ plural }}}-list.js', data);
+		utils.render('templates/front/module/list.html', 'front/modules/{{{ plural }}}/{{{ plural }}}-list.html', data);
+		utils.render('templates/front/module/edit.js', 'front/modules/{{{ plural }}}/{{{ singular }}}-edit.js', data);
+		utils.render('templates/front/module/edit.html', 'front/modules/{{{ plural }}}/{{{ singular }}}-edit.html', data);
 		utils.render('templates/front/resource.js', 'front/resources/{{{ plural }}}.js', data);
 		utils.patch(/\s+\$routeProvider./, 'templates/front/routes.js', 'front/routes.js', data);
 

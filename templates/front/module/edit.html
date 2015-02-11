@@ -1,0 +1,19 @@
+<div class="row {{{ singular }}}-edit">
+	<div class="col col-md-4">
+
+		<% columns.forEach(function (col) { %>
+		<div class="form-group form-input">
+			<input type="text" class="form-control" ng-model="{{{ singular }}}.{{{ col.name }}}" name="{{{ col.name }}}" placeholder="{{{ col.name }}}" />
+		</div>
+		<% }) %>
+
+		<div class="row">
+			<div class="col col-md-12">
+				<button class="btn btn-primary btn-block" ng-click="update({{{ singular }}})">сохранить изменения</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="col col-md-8 form-input" name="rules">
+	</div>
+</div>

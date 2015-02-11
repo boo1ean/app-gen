@@ -1,10 +1,8 @@
 app-gen - app-helpers generators (https://github.com/boo1ean/app-skeleton)
 
-	generate resource boilerplate
-	app-gen res <plural> <singular> <col1:type> [col2:type] ... [colN:type]
 
-	generate angular directive
-	app-gen dir <name>
+commands:
 
-	generate backend controller
-	app-gen con <name>
+res  generate resource (angular modules, routes, backend stuff)
+dir  generate angular directive
+con  generate backend controller
