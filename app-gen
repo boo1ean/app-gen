@@ -143,10 +143,37 @@ function generateBackendModule (name) {
 	}
 }
 
+function generateWebService (name) {
+	if (!name) {
+		utils.info('Error: Web service name is required \n');
+		usage();
+	}
+
+	buildFiles(name);
+
+	function buildFiles (name) {
+		var data = getData(name);
+
+		utils.under(name);
+
+		utils.render('templates/web/new-routes.js', '{{{ name }}}/routes.js', data);
+		utils.render('templates/web/app.js', '{{{ name }}}/app.js', data);
+		utils.render('templates/web/middlewares.js', '{{{ name }}}/middlewares.js', data);
+		utils.render('templates/web/empty-controller.js', '{{{ name }}}/controllers/index.js', data);
+		utils.patch(/\},/, 'templates/config/add-app.js', 'config/apps.js', data);
+	}
+
+	function getData (name) {
+		return {
+			name: name
+		}
+	}
+}
+
 function usage () {
 	utils.info(fs.readFileSync(__dirname + '/usage.txt').toString());
 	process.exit();
-};
+}
 
 function execute () {
 	switch (true) {
@@ -158,6 +185,8 @@ function execute () {
 			return generateController(argv._[1]);
 		case argv._[0] === 'bmod':
 			return generateBackendModule(argv._[1]);
+		case argv._[0] === 'web-service':
+			return generateWebService(argv._[1]);
 		default:
 			return usage();
 	}

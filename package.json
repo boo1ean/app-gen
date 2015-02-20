@@ -1,6 +1,6 @@
 {
   "name": "app-gen",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "app-helpers generators",
   "main": "index.js",
   "scripts": {
