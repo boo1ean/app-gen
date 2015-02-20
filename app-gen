@@ -118,6 +118,31 @@ function generateController (name) {
 	}
 }
 
+function generateBackendModule (name) {
+	if (!name) {
+		utils.info('Error: Backend module name is required \n');
+		usage();
+	}
+
+	buildFiles(name);
+
+	function buildFiles (name) {
+		var data = getData(name);
+
+		utils.under('core');
+
+		utils.render('templates/core/dal.js', 'core/{{{ plural }}}/dal.js', data);
+		utils.render('templates/core/index.js', 'core/{{{ plural }}}/index.js', data);
+	}
+
+	function getData (name) {
+		return {
+			name: name,
+			plural: name
+		}
+	}
+}
+
 function usage () {
 	utils.info(fs.readFileSync(__dirname + '/usage.txt').toString());
 	process.exit();
@@ -131,6 +156,8 @@ function execute () {
 			return generateDirective(argv._[1]);
 		case argv._[0] === 'con':
 			return generateController(argv._[1]);
+		case argv._[0] === 'bmod':
+			return generateBackendModule(argv._[1]);
 		default:
 			return usage();
 	}
