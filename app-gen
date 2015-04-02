@@ -8,11 +8,13 @@ var utils = require('./utils');
 function generateResource (args) {
 	var plural = args[0];
 	var singular = args[1];
-	var columns = parseColumns(args.slice(2));
+	var columns = getColumns();
 
 	buildFiles(plural, singular, columns);
 
-	function parseColumns (columns) {
+	function getColumns () {
+		var columns = args.slice(2);
+
 		if (columns.length < 1) {
 			utils.info('Error: Entity columns required\n');
 			usage();
