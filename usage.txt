@@ -1,9 +1,24 @@
 app-gen - app-helpers generators (https://github.com/boo1ean/app-skeleton)
 
-commands:
+GENERATORS
+==========
 
-res            generate resource (angular modules, routes, backend stuff)
-dir            generate angular directive
-con            generate backend controller
-bmod           generate backend module
-web-service    generate web service
+Resource (backend, front, routes):
+	
+	app-gen res users user email:text password:text
+
+Backend module:
+
+	app-gen bmod users email:text password:text
+
+Backend controller (controller, routes):
+
+	app-gen con users
+
+Angular directive:
+
+	app-gen dir user-profile-widget
+
+Simple web service:
+
+	app-gen web-service tracker
