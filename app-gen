@@ -8,34 +8,9 @@ var utils = require('./utils');
 function generateResource (args) {
 	var plural = args[0];
 	var singular = args[1];
-	var columns = getColumns();
+	var columns = getColumns(args.slice(2));
 
 	buildFiles(plural, singular, columns);
-
-	function getColumns () {
-		var columns = args.slice(2);
-
-		if (columns.length < 1) {
-			utils.info('Error: Entity columns required\n');
-			usage();
-		}
-
-		return columns.map(parseColumn);
-
-		function parseColumn (col) {
-			var tokens = col.split(':');
-
-			if (tokens.length !== 2) {
-				utils.info('Error: invalid column declaration: ' + col);
-				usage();
-			}
-
-			return {
-				name: tokens[0],
-				type: tokens[1]
-			}
-		}
-	}
 
 	function buildFiles (plural, singular, columns) {
 		var data = getData(plural, singular, columns);
@@ -68,6 +43,29 @@ function generateResource (args) {
 			Singular: _.capitalize(_.camelCase(singular)),
 			columns: columns
 		};
+	}
+}
+
+function getColumns (columns) {
+	if (columns.length < 1) {
+		utils.info('Error: Entity columns required\n');
+		usage();
+	}
+
+	return columns.map(parseColumn);
+
+	function parseColumn (col) {
+		var tokens = col.split(':');
+
+		if (tokens.length !== 2) {
+			utils.info('Error: invalid column declaration: ' + col);
+			usage();
+		}
+
+		return {
+			name: tokens[0],
+			type: tokens[1]
+		}
 	}
 }
 
@@ -120,16 +118,19 @@ function generateController (name) {
 	}
 }
 
-function generateBackendModule (name) {
+function generateBackendModule (args) {
+	var name = args[0];
+	var columns = getColumns(args.slice(1));
+
 	if (!name) {
 		utils.info('Error: Backend module name is required \n');
 		usage();
 	}
 
-	buildFiles(name);
+	buildFiles(name, columns);
 
-	function buildFiles (name) {
-		var data = getData(name);
+	function buildFiles (name, columns) {
+		var data = getData(name, columns);
 
 		utils.under('core');
 
@@ -137,10 +138,11 @@ function generateBackendModule (name) {
 		utils.render('templates/core/index.js', 'core/{{{ plural }}}/index.js', data);
 	}
 
-	function getData (name) {
+	function getData (name, columns) {
 		return {
 			name: name,
-			plural: name
+			plural: name,
+			columns: columns
 		}
 	}
 }
@@ -186,7 +188,7 @@ function execute () {
 		case argv._[0] === 'con':
 			return generateController(argv._[1]);
 		case argv._[0] === 'bmod':
-			return generateBackendModule(argv._[1]);
+			return generateBackendModule(argv._.slice(1));
 		case argv._[0] === 'web-service':
 			return generateWebService(argv._[1]);
 		default:
