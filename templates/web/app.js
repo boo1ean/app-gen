@@ -14,5 +14,3 @@ configureRoutes(app);
 app.listen(config.apps.{{{ name }}}.port);
 
 log.info('{{{ name }}} started at', config.apps.{{{ name }}}.port, 'in', config.env, 'environment');
-
-require('./worker');
