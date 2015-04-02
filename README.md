@@ -4,18 +4,25 @@ Generate boilerplate stuff
 
 ## Usage
 
-```
-app-gen - app-helpers generators (https://github.com/boo1ean/app-skeleton)
+Resource (backend, front, routes):
+	
+	app-gen res users user email:text password:text
 
-	generate resource boilerplate
-	app-gen res <plural> <singular> <col1:type> [col2:type] ... [colN:type]
+Backend module:
 
-	generate angular directive
-	app-gen dir <name>
+	app-gen bmod users email:text password:text
 
-	generate backend controller
-	app-gen con <name>
-```
+Backend controller (controller, routes):
+
+	app-gen con users
+
+Angular directive:
+
+	app-gen dir user-profile-widget
+
+Simple web service:
+
+	app-gen web-service tracker
 
 ## License
 
