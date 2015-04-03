@@ -8,7 +8,6 @@ var softDeleteColumn = 'removed_at';
 module.exports = dal({
 	table: table,
 	knex: knex,
-	fields: fields,
 	softDeleteColumn: softDeleteColumn,
 	pick: {
 		create: createAndUpdateFields,
