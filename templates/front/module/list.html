@@ -16,7 +16,7 @@
 				<table class="table">
 					<tr ng-repeat="{{{ singular }}} in {{{ plural }}}">
 						<% columns.forEach(function (col) { %>
-						<td>{{ {{{ singular }}}.{{{ col.name }}} }}</td>
+						<td><a href="/{{{ plural }}}/{{ {{{ singular }}}.id }}" target="_blank">{{ {{{ singular }}}.{{{ col.name }}} }}</a></td>
 						<% }) %>
 						<td><button class="btn btn-xs btn-danger" ng-click="remove({{{ singular }}})">&times;</button></td>
 					</tr>
